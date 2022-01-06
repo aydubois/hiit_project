@@ -1,0 +1,31 @@
+<section class="container-timer" [hidden]="timeFirstInterval > 0 && isStarted === true || isFinished === true">
+    <div class="title">
+        <h2>{{period}}</h2>
+        <h3>{{timeLeft |date:'mm:ss'}}</h3>
+    </div>
+    <div class="flex">
+        <div>
+            <label>Temps passé</label>
+            <p>{{timeSpent|date:'mm:ss'}}</p>
+        </div>
+        <div>
+            <label>Rounds</label>
+            <p>{{currentRound}}/{{totalRounds}}</p>
+        </div>
+        <div>
+            <label>Temps restant</label>
+            <p>{{totalTimeLeft|date:'mm:ss'}}</p>
+        </div>
+    </div>
+</section>
+<section class="container-timer-interval" *ngIf="timeFirstInterval > 0 && isStarted === true">
+    <h2 class="first-interval">{{timeFirstInterval}}</h2>
+</section>
+<section class="container-timer-interval" *ngIf="isFinished" >
+    <h2 class="first-interval">Fin</h2>   
+</section>
+<div class="btn-flex">
+    <button class="btn-beautiful" [hidden]="(isStarted && !isPaused ) ||( isStarted && timeFirstInterval > 0) " (click)="startTimer()">Démarrer</button>
+    <button class="btn-beautiful" [hidden]="!isStarted || isPaused || timeFirstInterval > 0 " (click)="pauseTimer()">Pause</button>
+    <button  class="btn-beautiful variant" [hidden]=" timeFirstInterval > 0 || isFinished" (click)="clearTimer()">Effacer</button>
+</div>

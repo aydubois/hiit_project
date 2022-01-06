@@ -1,1 +1,33 @@
 /* You can add global styles to this file, and also import other style files */
+:root{
+    --bg-1:#242435;
+    --bg-2:#1d262e;
+    --bg-3:#3f75ef;
+    --bg-4:#2ecb89;
+    --bg-5:#ef3f47;
+    --bg-6:#2e3acb;
+    --color-1:#93939f;
+    --color-2:#fff;
+    --color-3:rgb(0, 0, 0);
+    font-size:10px;
+    
+}
+
+body{
+    font-family: cursive;
+    font-size: 1.6rem;
+    background-color: var(--bg-1);
+    color: var(--color-1);
+    main{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+    }
+    section{
+        background-color: var(--bg-2);
+        width: clamp(360px,50rem, 100vw);
+        min-height: 25rem;
+        margin-top: 2rem;
+    }
+}

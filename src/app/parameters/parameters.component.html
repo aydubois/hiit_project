@@ -1,0 +1,28 @@
+<section class="container-form" *ngIf="!isStarted">
+    <h2>Paramètres</h2>
+    <form [formGroup]="form" (ngSubmit)="save(form?.value)">
+        <div class="form-group" [ngClass]="{'error':form?.controls?.['rounds']?.invalid && form?.controls?.['rounds']?.dirty }">
+        <label for="rounds">Rounds : </label>
+        <input type="number" name="rounds" id="rounds" formControlName="rounds">
+        <em *ngIf="form?.controls?.['rounds']?.invalid && form?.controls?.['rounds']?.dirty" class="text-error">Required</em>
+    </div>
+    <div class="form-group"  [ngClass]="{'error':(form?.controls?.['work_period_seconde']?.invalid && form?.controls?.['work_period_seconde']?.dirty) || (form?.controls?.['work_period_minute']?.invalid && form?.controls?.['work_period_minute']?.dirty) }">
+        <label for="work_periode">Période de travail : </label>
+        <div name="work_periode">
+            <input type="number" formControlName="work_period_minute" min="0" max="59" step="1"><span> min</span>
+            <input type="number" formControlName="work_period_seconde" min="0" max="59" step="1"><span> sec</span>
+            <em *ngIf="(form?.controls?.['work_period_seconde']?.invalid && form?.controls?.['work_period_seconde']?.dirty) || (form?.controls?.['work_period_minute']?.invalid && form?.controls?.['work_period_minute']?.dirty)" class="text-error"> Saisir des chiffres entre 0 et 59</em>
+            
+        </div>
+    </div>
+    <div class="form-group"  [ngClass]="{'error':(form?.controls?.['rest_period_seconde']?.invalid && form?.controls?.['rest_period_seconde']?.dirty) || (form?.controls?.['rest_period_minute']?.invalid && form?.controls?.['rest_period_minute']?.dirty) }">
+        <label for="rest_periode">Période de repos : </label>
+        <div name="rest_periode">
+            <input type="number" formControlName="rest_period_minute" min="0" max="59" step="1"><span> min</span>
+            <input type="number" formControlName="rest_period_seconde" min="0" max="59" step="1"><span> sec</span>
+            <em *ngIf="(form?.controls?.['rest_period_seconde']?.invalid && form?.controls?.['rest_period_seconde']?.dirty) || (form?.controls?.['rest_period_minute']?.invalid && form?.controls?.['rest_period_minute']?.dirty)" class="text-error"> Saisir des chiffres entre 0 et 59</em>
+        </div>
+    </div>
+    <button type="submit" [disabled]="form?.invalid">Enregistrer</button>
+</form>
+</section>

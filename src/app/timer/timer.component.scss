@@ -1,0 +1,67 @@
+
+
+button.btn-beautiful {
+    background-image: linear-gradient(to right, var(--bg-3) 0%, var(--bg-4) 100%);
+    padding: 1rem 2rem;
+    text-align: center;
+    transition: 0.5s;
+    color: var(--color-3);
+    background-size: 150% auto;
+    box-shadow: 0 0 3px #eeeeee8c;
+    border-radius: 5px;
+    // display: block;
+    margin:0 .5rem;
+    border:none;
+
+    &.variant{
+        background-image: linear-gradient(to right, var(--bg-5) 0%, var(--bg-6) 100%);
+    }
+ }
+
+ button.btn-beautiful:hover {
+   background-position: right center; /* change the direction of the change here */
+   color: var(--color-2);
+   text-decoration: none;
+ }
+
+ .title{
+     text-align: center;
+     
+    h2, h3{
+        font-size: 5rem;
+        margin:0;
+    }
+ }
+
+ .flex{
+     margin:1rem 0;
+     border-top:1px solid var(--color-1);
+     display: flex;
+     justify-content: space-evenly;
+     div{
+         display: flex;
+         flex-direction: column;
+         justify-content: center;
+         align-items: center;
+         p{
+             margin:0;
+         }
+     }
+ }
+ .btn-flex{
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     margin:1rem 0;
+ }
+
+ .container-timer-interval{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+     .first-interval{
+        font-size: 10em;
+        margin: 0;
+        color: var(--bg-5);
+    }
+}
