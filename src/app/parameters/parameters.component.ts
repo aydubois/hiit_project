@@ -12,15 +12,9 @@ import { ParameterService } from './parameters.service';
 })
 export class ParametersComponent implements OnInit {
   form:FormGroup
-  // =new FormGroup({
-  //   rounds:new FormControl(),
-  //   work_period_minute:new FormControl(),
-  //   work_period_seconde:new FormControl(),
-  //   rest_period_minute:new FormControl(),
-  //   rest_period_seconde:new FormControl()
-  // })
   parameter:IParameter
   exercises:IExercise[]
+  
   constructor( private parameterService:ParameterService,private exerciseService:ExercisesService){  }
 
   ngOnInit(): void {
@@ -39,7 +33,7 @@ export class ParametersComponent implements OnInit {
       })
     })
   }
-  
+
   save(formValue:IParameter){
     this.parameterService.saveParameter(formValue)
   }

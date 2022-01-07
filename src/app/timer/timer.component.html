@@ -1,4 +1,4 @@
-<section class="container-timer" [hidden]="timeFirstInterval > 0 && isStarted === true || isFinished === true">
+<section class="container-timer" [hidden]="timeFirstInterval > 0 && isStarted === true || isFinished === true || !isStarted">
     <div class="title">
         <h2>{{period}}</h2>
         <h3>{{timeLeft |date:'mm:ss'}}</h3>
@@ -28,7 +28,7 @@
     <h2 class="first-interval">Fin</h2>   
 </section>
 <div class="btn-flex">
-    <button class="btn-beautiful" mat-flat-button color="primary" [hidden]="(isStarted && !isPaused ) ||( isStarted && timeFirstInterval > 0) " (click)="startTimer()">Démarrer</button>
-    <button class="btn-beautiful" mat-flat-button  color="primary" [hidden]="!isStarted || isPaused || timeFirstInterval > 0 " (click)="pauseTimer()">Pause</button>
-    <button  class="btn-beautiful variant" mat-stroked-button color="primary" [hidden]=" timeFirstInterval > 0 || isFinished" (click)="clearTimer()" matStepperPrevious>Effacer</button>
+    <button  mat-flat-button color="primary" *ngIf="!isStarted || isPaused" (click)="startTimer()">Démarrer</button>
+    <button  mat-flat-button  color="primary" *ngIf="isStarted && !isPaused && timeFirstInterval == 0 " (click)="pauseTimer()">Pause</button>
+    <button  mat-stroked-button color="primary" *ngIf="isStarted && timeFirstInterval == 0" (click)="clearTimer()" matStepperPrevious>Effacer</button>
 </div>
