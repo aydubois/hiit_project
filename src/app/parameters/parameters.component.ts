@@ -1,5 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { IExercise } from '../exercises/exercises.model';
+import { ExercisesService } from '../exercises/exercises.service';
 import { IParameter } from './parameters.model';
 import { ParameterService } from './parameters.service';
 
@@ -17,23 +19,27 @@ export class ParametersComponent implements OnInit {
     rest_period_seconde:new FormControl()
   })
   parameter:IParameter
-
-  @Input() isStarted:boolean
-  constructor( private parameterService:ParameterService){  }
+  exercises:IExercise[]
+  constructor( private parameterService:ParameterService,private exerciseService:ExercisesService){  }
 
   ngOnInit(): void {
-    this.parameterService.getParameter().subscribe(param =>{ 
-      this.parameter = param
-      this.form = new FormGroup({
-        rounds:new FormControl(this.parameter.rounds,[Validators.required, Validators.min(1)]),
-        work_period_minute:new FormControl(this.parameter.work_period_minute,[Validators.required, Validators.max(59), Validators.min(0)]),
-        work_period_seconde:new FormControl(this.parameter.work_period_seconde,[Validators.required, Validators.max(59), Validators.min(0)]),
-        rest_period_minute:new FormControl(this.parameter.rest_period_minute,[Validators.required, Validators.max(59), Validators.min(0)]),
-        rest_period_seconde:new FormControl(this.parameter.rest_period_seconde,[Validators.required, Validators.max(59), Validators.min(0)]),
+    this.exerciseService.getSelectedExercises().subscribe((exercises:IExercise[])=>{
+      this.exercises = exercises
+      console.log("exercises", exercises)
+      this.parameterService.getParameter().subscribe(param =>{ 
+        this.parameter = param
+        this.form = new FormGroup({
+          rounds:new FormControl(this.parameter.rounds,[Validators.required, Validators.min(exercises.length)]),
+          work_period_minute:new FormControl(this.parameter.work_period_minute,[Validators.required, Validators.max(59), Validators.min(0)]),
+          work_period_seconde:new FormControl(this.parameter.work_period_seconde,[Validators.required, Validators.max(59), Validators.min(0)]),
+          rest_period_minute:new FormControl(this.parameter.rest_period_minute,[Validators.required, Validators.max(59), Validators.min(0)]),
+          rest_period_seconde:new FormControl(this.parameter.rest_period_seconde,[Validators.required, Validators.max(59), Validators.min(0)]),
+        })
       })
     })
   }
   save(formValue:IParameter){
+    console.log(this.form)
     this.parameterService.saveParameter(formValue)
   }
 

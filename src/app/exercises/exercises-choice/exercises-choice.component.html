@@ -6,5 +6,5 @@
         <input type="checkbox" [id]="'exercise_'+index"  [value]="exercice.value" (change)="onCheckboxChange($event)"/>
         <label [for]="'exercise_'+index"><img [src]="exercice.url" /></label>
     </div>
-    <button  mat-flat-button color="primary" matStepperNext type="submit">Confirmer</button>
+    <button [disabled]="formChoiceExercises?.invalid" mat-flat-button color="primary" matStepperNext type="submit">Confirmer</button>
 </form>

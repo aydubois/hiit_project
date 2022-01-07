@@ -5,22 +5,23 @@ import { IExercise } from "./exercises.model";
 @Injectable()
 export class ExercisesService{
     private selectedExercises:IExercise[] = []
-
+    private subjectAll:Subject<IExercise[]> =  new Subject<IExercise[]>()
+    private subjectSelected:Subject<IExercise[]> =  new Subject<IExercise[]>()
     getAllExercises():Subject<IExercise[]>{
-        let subject:Subject<IExercise[]> =  new Subject<IExercise[]>()
+        // let subject:Subject<IExercise[]> =  new Subject<IExercise[]>()
         setTimeout(()=>{
-            subject.next(EXERCISES)
+            this.subjectAll.next(EXERCISES)
         },100)
-        return subject
+        return this.subjectAll
     }
 
     getSelectedExercises():Subject<IExercise[]>{
-        let subject:Subject<IExercise[]> =  new Subject<IExercise[]>()
+        //let subject:Subject<IExercise[]> =  new Subject<IExercise[]>()
 
         setTimeout(()=>{
-            subject.next(this.selectedExercises)
+            this.subjectSelected.next(this.selectedExercises)
         },100)
-        return subject
+        return this.subjectSelected
     }
 
     saveSelectedExercisesByValue(exercises:string[]):Subject<IExercise[]>{
@@ -30,14 +31,18 @@ export class ExercisesService{
                 this.selectedExercises.push(exercise)
             }
         })
-        let subject:Subject<IExercise[]> =  new Subject<IExercise[]>()
+        // let subject:Subject<IExercise[]> =  new Subject<IExercise[]>()
         setTimeout(()=>{
-            subject.next(this.selectedExercises)
+            this.subjectSelected.next(this.selectedExercises)
         },100)
-        return subject
+        return this.subjectSelected
     }
-    saveSelectedExercises(exercises:IExercise[]){
+    saveSelectedExercises(exercises:IExercise[]):Subject<IExercise[]>{
         this.selectedExercises = exercises
+        setTimeout(()=>{
+            this.subjectSelected.next(this.selectedExercises)
+        },100)
+        return this.subjectSelected
     }
 }
 

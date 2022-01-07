@@ -24,12 +24,12 @@ body{
         justify-content: center;
         flex-direction: column;
     }
-    section{
-        background-color: var(--bg-2);
-        width: clamp(360px,50rem, 100vw);
-        min-height: 25rem;
-        margin-top: 2rem;
-    }
+    //section{
+        // background-color: var(--bg-2);
+        // width: clamp(360px,50rem, 100vw);
+        // min-height: 25rem;
+        // margin-top: 2rem;
+    //}
     .text-error{
         color: var(--bg-5);
     }

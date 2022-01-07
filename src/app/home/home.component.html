@@ -1,7 +1,6 @@
 <main>
     <mat-stepper orientation="vertical" #stepper linear="true">
         <mat-step [completed]="exercisesChoiceComponent?.isCompleted || undefined">
-            <p>{{exercisesChoiceComponent?.isCompleted ? 'true' :'false'}}</p>
             <ng-template matStepLabel>Choisis le(s) exercice(s) souhaité(s)</ng-template>
             <app-exercises-choice #ExercisesChoiceComponent [exercises]="exercises" (selectedExercises)="saveSelectedExercises($event)"></app-exercises-choice>
         </mat-step>
@@ -10,31 +9,14 @@
             <app-exercises-drag-drop [selectedExercises]="selectedExercises"  (selectedExercisesChange)="onSelectedExercisesChange($event)"></app-exercises-drag-drop>
             
         </mat-step>
-        <mat-step>
+        <mat-step [stepControl] = "formParameter">
             <ng-template matStepLabel>Définis les paramètres de la séance</ng-template>
-            <button>3</button>
+            <app-parameters #Parameters></app-parameters>
         </mat-step>
         <mat-step>
             <ng-template matStepLabel>Go</ng-template>
+            <app-timer (startEvent)="startEvent($event)"></app-timer>
+
         </mat-step>
     </mat-stepper>
-    <ul>
-        <li>TODO</li>
-        <li>Ajouter un chemin de fer</li>
-        <li>Etape 1 : Choisir un ou plusieurs exercices</li>
-        <li>Etape 2 : Choisir l'ordre</li>
-        <li>Etape 3 : Paramètres rounds
-            <ul>
-                <li>aperçu des exo dans l'ordre</li>
-                <li>minimum de round == nb exercices</li>
-            </ul>
-        </li>
-        <li>Etape 4 : démarrage timer</li>
-    </ul>
-    <ul>
-        <li>Ajouter Material</li>
-        <li>Faire quelques tests unitaires</li>
-    </ul>
-    <app-timer (startEvent)="startEvent($event)"></app-timer>
-    <app-parameters [isStarted]="isStarted"></app-parameters>
 </main>

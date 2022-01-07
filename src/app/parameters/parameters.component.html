@@ -1,11 +1,12 @@
-<section class="container-form" *ngIf="!isStarted">
+<section class="container-form">
     <h2>Paramètres</h2>
     <form [formGroup]="form" (ngSubmit)="save(form?.value)">
         <div class="form-group" [ngClass]="{'error':form?.controls?.['rounds']?.invalid && form?.controls?.['rounds']?.dirty }">
         <label for="rounds">Rounds : </label>
         <input type="number" name="rounds" id="rounds" formControlName="rounds">
-        <em *ngIf="form?.controls?.['rounds']?.invalid && form?.controls?.['rounds']?.dirty" class="text-error">Required</em>
     </div>
+    <em *ngIf="form?.controls?.['rounds']?.errors?.['min']" class="text-error">Le nombre de tours doit être au minimum de {{this?.exercises?.length}}</em>
+    <em *ngIf="form?.controls?.['rounds']?.invalid && form?.controls?.['rounds']?.dirty && !form?.controls?.['rounds']?.errors?.['min']" class="text-error">Requis</em>
     <div class="form-group"  [ngClass]="{'error':(form?.controls?.['work_period_seconde']?.invalid && form?.controls?.['work_period_seconde']?.dirty) || (form?.controls?.['work_period_minute']?.invalid && form?.controls?.['work_period_minute']?.dirty) }">
         <label for="work_periode">Période de travail : </label>
         <div name="work_periode">
@@ -23,6 +24,6 @@
             <em *ngIf="(form?.controls?.['rest_period_seconde']?.invalid && form?.controls?.['rest_period_seconde']?.dirty) || (form?.controls?.['rest_period_minute']?.invalid && form?.controls?.['rest_period_minute']?.dirty)" class="text-error"> Saisir des chiffres entre 0 et 59</em>
         </div>
     </div>
-    <button type="submit" [disabled]="form?.invalid">Enregistrer</button>
+    <button type="submit" mat-flat-button matStepperNext color="primary" [disabled]="form?.invalid">Enregistrer</button>
 </form>
 </section>

@@ -17,6 +17,9 @@
             <p>{{totalTimeLeft|date:'mm:ss'}}</p>
         </div>
     </div>
+    <div class="btn-flex">
+        <img *ngIf="currentExercise" [src]="currentExercise.url"/>
+    </div>
 </section>
 <section class="container-timer-interval" *ngIf="timeFirstInterval > 0 && isStarted === true">
     <h2 class="first-interval">{{timeFirstInterval}}</h2>
@@ -25,7 +28,7 @@
     <h2 class="first-interval">Fin</h2>   
 </section>
 <div class="btn-flex">
-    <button class="btn-beautiful" [hidden]="(isStarted && !isPaused ) ||( isStarted && timeFirstInterval > 0) " (click)="startTimer()">Démarrer</button>
-    <button class="btn-beautiful" [hidden]="!isStarted || isPaused || timeFirstInterval > 0 " (click)="pauseTimer()">Pause</button>
-    <button  class="btn-beautiful variant" [hidden]=" timeFirstInterval > 0 || isFinished" (click)="clearTimer()">Effacer</button>
+    <button class="btn-beautiful" mat-flat-button color="primary" [hidden]="(isStarted && !isPaused ) ||( isStarted && timeFirstInterval > 0) " (click)="startTimer()">Démarrer</button>
+    <button class="btn-beautiful" mat-flat-button  color="primary" [hidden]="!isStarted || isPaused || timeFirstInterval > 0 " (click)="pauseTimer()">Pause</button>
+    <button  class="btn-beautiful variant" mat-stroked-button color="primary" [hidden]=" timeFirstInterval > 0 || isFinished" (click)="clearTimer()" matStepperPrevious>Effacer</button>
 </div>

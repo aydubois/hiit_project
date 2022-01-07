@@ -1,5 +1,7 @@
 import { Component, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { timer, interval, takeUntil } from 'rxjs';
+import { IExercise } from '../exercises/exercises.model';
+import { ExercisesService } from '../exercises/exercises.service';
 import { IParameter } from '../parameters/parameters.model';
 import { ParameterService } from '../parameters/parameters.service';
 
@@ -25,9 +27,15 @@ export class TimerComponent implements OnInit, OnDestroy {
   isFinished:boolean=false
   @Output() startEvent = new EventEmitter<boolean>()
 
-  constructor(private parameterService:ParameterService) { }
+  exercises:IExercise[]
+  currentExercise:IExercise
+  constructor(private parameterService:ParameterService, private exerciseService: ExercisesService ) { }
 
   ngOnInit(): void {
+    this.exerciseService.getSelectedExercises().subscribe((exercises:IExercise[])=>{
+      this.exercises = exercises
+      this.currentExercise = exercises[0]
+    })
     this.parameterService.getParameter().subscribe(param => {
       this.params = param
       this.totalRounds = this.params.rounds
@@ -37,6 +45,7 @@ export class TimerComponent implements OnInit, OnDestroy {
       this.totalTimeLeft.setMilliseconds((this.params.work_period_total_millisecond + this.params.rest_period_total_millisecond)*this.params.rounds)
       this.timeSpent = new Date(0,0,0)
     })
+    
   }
 
   startTimer() {
@@ -85,17 +94,25 @@ export class TimerComponent implements OnInit, OnDestroy {
 
       this.period = this.period === "Travail" ? "Repos" : "Travail"
       if(this.period === "Travail"){
+        this.setCurrentExercise()
         this.currentRound++
       }
     }
     return this.period
   }
 
+  setCurrentExercise(){
+    let index = this.exercises.indexOf(this.currentExercise)
+    index++
+    if(index === this.exercises.length ){
+      index = 0
+    }
+    this.currentExercise = this.exercises[index]
+  }
   clearTimer(){
     this.startEvent.emit(false)
-    this.interval.unsubscribe()
+    this.interval?.unsubscribe()
     console.log(typeof this.interval)
-
     this.currentRound = 1
     this.isStarted = false
     this.totalRounds = this.params.rounds
@@ -129,7 +146,7 @@ export class TimerComponent implements OnInit, OnDestroy {
     let audio:HTMLAudioElement = new Audio("./../../assets/bip.mp3")
     audio.play()
   }
-  
+
   unsubscribe(){
     if( this.firstInterval !== undefined && !this.firstInterval.closed){
       this.firstInterval.unsubscribe()

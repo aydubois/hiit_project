@@ -18,7 +18,6 @@ export class ExercisesDragDropComponent implements OnInit {
     moveItemInArray(this.selectedExercises, event.previousIndex, event.currentIndex);
   }
   saveSelectedExercises(){
-    console.log(this.selectedExercises)
     this.selectedExercisesChange.emit(this.selectedExercises)
   }
 }

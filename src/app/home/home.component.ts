@@ -1,9 +1,11 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild, ViewChildren } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild, ViewChildren } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatStepper } from '@angular/material/stepper';
 import { ExercisesChoiceComponent } from '../exercises/exercises-choice/exercises-choice.component';
 import { IExercise } from '../exercises/exercises.model';
 import { ExercisesService } from '../exercises/exercises.service';
+import { ParametersComponent } from '../parameters/parameters.component';
+import { ParameterService } from '../parameters/parameters.service';
 
 @Component({
   selector: 'app-root',
@@ -15,11 +17,12 @@ export class HomeComponent implements OnInit, OnChanges {
   isFormTouched:boolean=false
 
   @ViewChild('ExercisesChoiceComponent') exercisesChoiceComponent: ExercisesChoiceComponent;
-  
+  @ViewChild('Parameters')parametersComponent: ParametersComponent;
+  formParameter:FormGroup
   exercises:IExercise[]
   selectedExercises:IExercise[]
 
-  constructor(private exercisesService:ExercisesService) {}
+  constructor(private exercisesService:ExercisesService, private cdr :ChangeDetectorRef) {}
 
   ngOnInit(): void {
     this.exercisesService.getAllExercises().subscribe((exercises:IExercise[]) => {
@@ -46,4 +49,11 @@ export class HomeComponent implements OnInit, OnChanges {
       this.selectedExercises = selectedExercises
     }
   }
+
+
+  ngAfterViewInit(){
+    this.formParameter = this.parametersComponent.form;
+    this.cdr.detectChanges();
+  }
+
 }
