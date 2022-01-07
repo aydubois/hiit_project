@@ -1,0 +1,7 @@
+<div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
+    <div class="example-box" *ngFor="let exercise of selectedExercises" cdkDrag>
+        <img [src]="exercise.url"/>
+    </div>
+    <button mat-flat-button color="primary" matStepperNext (click)="saveSelectedExercises()">Valider</button>
+</div>
+

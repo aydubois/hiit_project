@@ -1,5 +1,3 @@
-import { AbstractControl } from "@angular/forms";
-
 export interface IParameter{
     rounds:number,
     work_period_minute:number,

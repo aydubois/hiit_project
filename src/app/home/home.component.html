@@ -1,4 +1,23 @@
 <main>
+    <mat-stepper orientation="vertical" #stepper linear="true">
+        <mat-step [completed]="exercisesChoiceComponent?.isCompleted || undefined">
+            <p>{{exercisesChoiceComponent?.isCompleted ? 'true' :'false'}}</p>
+            <ng-template matStepLabel>Choisis le(s) exercice(s) souhaité(s)</ng-template>
+            <app-exercises-choice #ExercisesChoiceComponent [exercises]="exercises" (selectedExercises)="saveSelectedExercises($event)"></app-exercises-choice>
+        </mat-step>
+        <mat-step>
+            <ng-template matStepLabel>Place-les dans l'ordre que tu souhaites</ng-template>
+            <app-exercises-drag-drop [selectedExercises]="selectedExercises"  (selectedExercisesChange)="onSelectedExercisesChange($event)"></app-exercises-drag-drop>
+            
+        </mat-step>
+        <mat-step>
+            <ng-template matStepLabel>Définis les paramètres de la séance</ng-template>
+            <button>3</button>
+        </mat-step>
+        <mat-step>
+            <ng-template matStepLabel>Go</ng-template>
+        </mat-step>
+    </mat-stepper>
     <ul>
         <li>TODO</li>
         <li>Ajouter un chemin de fer</li>

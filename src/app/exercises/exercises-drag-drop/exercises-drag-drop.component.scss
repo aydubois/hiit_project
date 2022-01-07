@@ -1,0 +1,12 @@
+img {
+    height: 100px;
+    width: 100px;
+    transition-duration: 0.2s;
+    transform-origin: 50% 50%;
+  }
+img:active, img:focus{
+    transform: scale(0.9);
+    box-shadow: 0 0 5px #333;
+    z-index: -1;
+    border:1px solid var(--bg-4)
+}

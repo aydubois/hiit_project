@@ -14,7 +14,7 @@
 }
 
 body{
-    font-family: cursive;
+    //font-family: cursive;
     font-size: 1.6rem;
     background-color: var(--bg-1);
     color: var(--color-1);
@@ -30,4 +30,13 @@ body{
         min-height: 25rem;
         margin-top: 2rem;
     }
+    .text-error{
+        color: var(--bg-5);
+    }
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+.mat-step{
+    width: clamp(360px,70rem,95vw);
 }
