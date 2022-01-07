@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { IExercise } from '../exercises/exercises.model';
 import { ExercisesService } from '../exercises/exercises.service';
@@ -11,13 +11,14 @@ import { ParameterService } from './parameters.service';
   styleUrls: ['./parameters.component.scss']
 })
 export class ParametersComponent implements OnInit {
-  form:FormGroup=new FormGroup({
-    rounds:new FormControl(),
-    work_period_minute:new FormControl(),
-    work_period_seconde:new FormControl(),
-    rest_period_minute:new FormControl(),
-    rest_period_seconde:new FormControl()
-  })
+  form:FormGroup
+  // =new FormGroup({
+  //   rounds:new FormControl(),
+  //   work_period_minute:new FormControl(),
+  //   work_period_seconde:new FormControl(),
+  //   rest_period_minute:new FormControl(),
+  //   rest_period_seconde:new FormControl()
+  // })
   parameter:IParameter
   exercises:IExercise[]
   constructor( private parameterService:ParameterService,private exerciseService:ExercisesService){  }
@@ -25,7 +26,7 @@ export class ParametersComponent implements OnInit {
   ngOnInit(): void {
     this.exerciseService.getSelectedExercises().subscribe((exercises:IExercise[])=>{
       this.exercises = exercises
-      console.log("exercises", exercises)
+
       this.parameterService.getParameter().subscribe(param =>{ 
         this.parameter = param
         this.form = new FormGroup({
@@ -38,8 +39,8 @@ export class ParametersComponent implements OnInit {
       })
     })
   }
+  
   save(formValue:IParameter){
-    console.log(this.form)
     this.parameterService.saveParameter(formValue)
   }
 

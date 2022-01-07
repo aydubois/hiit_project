@@ -1,3 +1,6 @@
+section{
+    margin-top: 2rem;
+}
 img {
     height: 100px;
     width: 100px;
@@ -8,5 +11,11 @@ img:active, img:focus{
     transform: scale(0.9);
     box-shadow: 0 0 5px #333;
     z-index: -1;
-    border:1px solid var(--bg-4)
+    border:1px solid #673ab7
+}
+.drag-container{
+    display: flex;
+    .drag-box{
+        margin:0 .3rem;
+    }
 }

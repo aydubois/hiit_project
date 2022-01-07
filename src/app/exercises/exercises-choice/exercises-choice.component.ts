@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { ExercisesService } from '../exercises.service';
 
 @Component({
   selector: 'app-exercises-choice',
@@ -13,9 +12,7 @@ export class ExercisesChoiceComponent implements OnInit {
   @Input() exercises:Array<any>
   @Output() selectedExercises = new EventEmitter<Array<any>>()
 
-  constructor(private formBuilder:FormBuilder) { 
-    
-  }
+  constructor(private formBuilder:FormBuilder) {}
 
   ngOnInit(): void {
     this.formChoiceExercises = this.formBuilder.group({
@@ -45,10 +42,11 @@ export class ExercisesChoiceComponent implements OnInit {
   }
 
   saveChoiceExercises(formValues:any){
-    console.log("save")
     this.selectedExercises.emit(formValues)
   }
 
+  //TODO: remplacer par un formGroup dand Home
+  //fonction dans template pas recommandé
   public get isCompleted():boolean{
     return this.formChoiceExercises.valid
   }

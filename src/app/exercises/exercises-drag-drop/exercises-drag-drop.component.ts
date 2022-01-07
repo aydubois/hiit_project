@@ -10,13 +10,15 @@ export class ExercisesDragDropComponent implements OnInit {
 
   @Input() selectedExercises:IExercise[]
   @Output() selectedExercisesChange:EventEmitter<IExercise[]> = new EventEmitter<IExercise[]>()
-  constructor() { }
+  
+  constructor() {}
+  ngOnInit(): void {}
 
-  ngOnInit(): void {
-  }
+
   drop(event: CdkDragDrop<string[]>) {
     moveItemInArray(this.selectedExercises, event.previousIndex, event.currentIndex);
   }
+  
   saveSelectedExercises(){
     this.selectedExercisesChange.emit(this.selectedExercises)
   }
