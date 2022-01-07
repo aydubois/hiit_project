@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { IExercise } from '../exercises/exercises.model';
 import { ExercisesService } from '../exercises/exercises.service';
@@ -10,18 +10,18 @@ import { ParameterService } from './parameters.service';
   templateUrl: './parameters.component.html',
   styleUrls: ['./parameters.component.scss']
 })
-export class ParametersComponent implements OnInit {
+export class ParametersComponent implements OnInit, OnDestroy {
   form:FormGroup
   parameter:IParameter
   exercises:IExercise[]
-  
+  mySubscription:Array<any>= []
   constructor( private parameterService:ParameterService,private exerciseService:ExercisesService){  }
 
   ngOnInit(): void {
-    this.exerciseService.getSelectedExercises().subscribe((exercises:IExercise[])=>{
+    this.mySubscription[0] = this.exerciseService.getSelectedExercises().subscribe((exercises:IExercise[])=>{
       this.exercises = exercises
 
-      this.parameterService.getParameter().subscribe(param =>{ 
+    this.mySubscription[1] = this.parameterService.getParameter().subscribe(param =>{ 
         this.parameter = param
         this.form = new FormGroup({
           rounds:new FormControl(this.parameter.rounds,[Validators.required, Validators.min(exercises.length)]),
@@ -38,4 +38,11 @@ export class ParametersComponent implements OnInit {
     this.parameterService.saveParameter(formValue)
   }
 
+  ngOnDestroy(): void {
+      if(this.mySubscription.length != 0){
+        this.mySubscription.forEach(sub => {
+          sub.unsubscribe()
+        });
+      }
+  }
 }

@@ -29,14 +29,17 @@ export class TimerComponent implements OnInit, OnDestroy {
 
   exercises:IExercise[]
   currentExercise:IExercise
+
+  mySubscription:Array<any>= []
+
   constructor(private parameterService:ParameterService, private exerciseService: ExercisesService ) { }
 
   ngOnInit(): void {
-    this.exerciseService.getSelectedExercises().subscribe((exercises:IExercise[])=>{
+    this.mySubscription[0] = this.exerciseService.getSelectedExercises().subscribe((exercises:IExercise[])=>{
       this.exercises = exercises
       this.currentExercise = exercises[0]
     })
-    this.parameterService.getParameter().subscribe(param => {
+    this.mySubscription[1] = this.parameterService.getParameter().subscribe(param => {
       this.params = param
       this.totalRounds = this.params.rounds
       this.timeLeft = new Date(0,0,0)
@@ -157,5 +160,10 @@ export class TimerComponent implements OnInit, OnDestroy {
   }
   ngOnDestroy(){
     this.unsubscribe()
+    if(this.mySubscription.length != 0){
+      this.mySubscription.forEach(sub => {
+        sub.unsubscribe()
+      });
+    }
   }
 }

@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { ExercisesChoiceComponent } from '../exercises/exercises-choice/exercises-choice.component';
 import { IExercise } from '../exercises/exercises.model';
@@ -10,7 +10,7 @@ import { ParametersComponent } from '../parameters/parameters.component';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
   
   @ViewChild('ExercisesChoiceComponent') exercisesChoiceComponent: ExercisesChoiceComponent;
   @ViewChild('Parameters')parametersComponent: ParametersComponent;
@@ -22,14 +22,16 @@ export class HomeComponent implements OnInit {
   isStarted:boolean
   isFormTouched:boolean=false
 
+  mySubscription:any
+
   constructor(private exercisesService:ExercisesService, private cdr :ChangeDetectorRef) {}
 
   ngOnInit(): void {
-    this.exercisesService.getAllExercises().subscribe((exercises:IExercise[]) => {
+    this.mySubscription = this.exercisesService.getAllExercises().subscribe((exercises:IExercise[]) => {
       this.exercises = exercises
     })
   }
-  
+
   ngAfterViewInit(){
     this.formParameter = this.parametersComponent.form;
     this.cdr.detectChanges();
@@ -48,7 +50,11 @@ export class HomeComponent implements OnInit {
     }
   }
 
-
+  ngOnDestroy(){
+    if( this.mySubscription !== undefined && !this.mySubscription.closed){
+      this.mySubscription.unsubscribe()
+    }
+  }
 
 
 }

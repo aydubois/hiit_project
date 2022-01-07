@@ -50,4 +50,6 @@ export class ExercisesChoiceComponent implements OnInit {
   public get isCompleted():boolean{
     return this.formChoiceExercises.valid
   }
+
+  
 }
